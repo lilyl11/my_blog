@@ -59,7 +59,7 @@
     </div>
     <script>
       var title = $('.title-1');
-      title.text("Hi, I'm ____");
+      title.text("Hi, I'm Wenting");
       title.css({color: "red", fontSize: "60px"});
 
       function changeTitleColor(){
@@ -72,6 +72,21 @@
       }
 
       title.hover(changeTitleColor);
+      
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var lat = position.coords.latitude
+        var lon = position.coords.longitude
+        $.ajax({
+          url: "api/v1/weather",
+          data: {lat: lat, lon: lon},
+          method: "GET",
+          success: function(data) {
+            var subtitle = $('.title-2')
+            subtitle.text("Today's temperature is " + data.currently.temperature + " F")
+            // or can use $('.title-2').text("Today's temperature is " + data.currently.temperature+ " F")
+          }
+        })
+      })
 
     </script>
     </body>
